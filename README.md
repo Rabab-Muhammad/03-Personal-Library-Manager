@@ -1,6 +1,7 @@
 # 03-Personal-Library-Manager
 
 Requirements
+
 Core Features
 Book Details: Each book should have the following attributes:
 
