@@ -254,7 +254,7 @@ elif st.session_state.current_view == "view_library":
                     <div>
                         <strong>{book['title']}</strong><br>
                         <em>by {book['author']}</em><br>
-                       <span>{book['publication_year']} • {book['genre']}</span>
+                       <span>{book.get('publication_year', 'N/A')} • {book.get('genre', 'N/A')}</span>
                     </div>
                     <div>
                         <span class='{badge_class}'>{badge_text}</span>
