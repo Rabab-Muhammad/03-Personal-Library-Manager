@@ -254,7 +254,8 @@ elif st.session_state.current_view == "view_library":
                     <div>
                         <strong>{book['title']}</strong><br>
                         <em>by {book['author']}</em><br>
-                        <span>{book['publication_year', 'N/A']} • {book['genre', 'N/A']}</span>
+                      st.markdown(f"<span>{book.get('publication_year', 'N/A')} • {book.get('genre', 'N/A')}</span>", unsafe_allow_html=True)
+
                     </div>
                     <div>
                         <span class='{badge_class}'>{badge_text}</span>
