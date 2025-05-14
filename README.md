@@ -1,53 +1,58 @@
 # 03-Personal-Library-Manager
 
-Requirements
+## Requirements
 
-Core Features
+### Core Features
 
-Book Details: Each book should have the following attributes:
+#### Book Details:
+Each book should have the following attributes:
+- **Title** (string)
+- **Author** (string)
+- **Publication Year** (integer)
+- **Genre** (string)
+- **Read Status** (boolean: `True` if read, `False` if unread)
 
-Title (string)
+#### Menu System:
+Implement a menu with the following options:
+1. **Add a book**
+2. **Remove a book**
+3. **Search for a book**
+4. **Display all books**
+5. **Display statistics** (total books, percentage read)
+6. **Exit**
 
-Author (string)
+#### Features:
 
-Publication Year (integer)
+1. **Add a Book**: 
+   - Prompt the user to enter the book's details (Title, Author, Publication Year, Genre, Read Status) and add it to the library.
 
-Genre (string)
+2. **Remove a Book**: 
+   - Prompt the user to enter the title of the book to remove it from the library.
 
-Read Status (boolean: True if read, False if unread)
+3. **Search for a Book**: 
+   - Allow the user to search for a book by title or author.
+   - Display all matching books.
 
-Menu System: Implement a menu with the following options:
+4. **Display All Books**: 
+   - Show all books in the library in a formatted way.
 
-Add a book
+5. **Display Statistics**:
+   - **Total Books**: Display the total number of books in the library.
+   - **Percentage of Books Read**: Calculate and display the percentage of books that have been read.
 
-Remove a book
+6. **Exit**: 
+   - Exit the program.
 
-Search for a book
+---
 
-Display all books
+## Optional Challenge (File Handling)
 
-Display statistics (total books, percentage read)
+### Save Library to a File:
+- Save the library data to a file (e.g., `library.txt`) when the program exits.
 
-Exit
+### Load Library from a File:
+- Load the library data from the file when the program starts.
 
-Add a Book: Prompt the user to enter the book's details and add it to the library.
+---
 
-Remove a Book: Prompt the user to enter the title of the book to remove it from the library.
 
-Search for a Book: Allow the user to search for a book by title or author. Display all matching books.
-
-Display All Books: Show all books in the library in a formatted way.
-
-Display Statistics:
-
-Total number of books in the library.
-
-Percentage of books that have been read.
-
-Exit: Exit the program.
-
-Optional Challenge (File Handling)
-
-Save Library to a File: Save the library data to a file (e.g., library.txt) when the program exits.
-
-Load Library from a File: Load the library data from the file when the program starts.
