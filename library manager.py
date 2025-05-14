@@ -164,18 +164,18 @@ def remove_book(index):
 
 def search_book(term, by):
     term = term.lower()
-    st.session_state.search_results = [book for book in st.session_state.library if term in book[by].lower()]
+    st.session_state.search_results = [book for book in st.session_state.library if term in book.get(by, "").lower()]
 
 # Statistics
 def get_library_stats():
     total = len(st.session_state.library)
-    read = sum(1 for b in st.session_state.library if b['read_status'])
+    read = sum(1 for b in st.session_state.library if b.get('read_status'))
     genres, authors, decades = {}, {}, {}
 
     for b in st.session_state.library:
-        genres[b['genre']] = genres.get(b['genre'], 0) + 1
-        authors[b['author']] = authors.get(b['author'], 0) + 1
-        decade = (b['publication_year'] // 10) * 10
+        genres[b.get('genre', 'Unknown')] = genres.get(b.get('genre', 'Unknown'), 0) + 1
+        authors[b.get('author', 'Unknown')] = authors.get(b.get('author', 'Unknown'), 0) + 1
+        decade = ((b.get('publication_year', 0) or 0) // 10) * 10
         decades[decade] = decades.get(decade, 0) + 1
 
     return {
@@ -210,8 +210,14 @@ def create_visualizations(stats):
         fig.update_layout(title="Books by Decade")
         st.plotly_chart(fig, use_container_width=True)
 
-# Load library
+# Load and patch
 load_library()
+for book in st.session_state.library:
+    if 'publication_year' not in book:
+        book['publication_year'] = 2023
+    if 'genre' not in book:
+        book['genre'] = "Other"
+save_library()
 
 # Sidebar Navigation
 nav = st.sidebar.radio("Navigate", ["View Library", "Add Book", "Search Books", "Library Statistics"])
@@ -246,15 +252,15 @@ elif st.session_state.current_view == "view_library":
         st.markdown("<div class='warning-msg'>⚠️ No books found.</div>", unsafe_allow_html=True)
     else:
         for idx, book in enumerate(st.session_state.library):
-            badge_class = "read-badge" if book['read_status'] else "unread-badge"
-            badge_text = "Read" if book['read_status'] else "Unread"
+            badge_class = "read-badge" if book.get('read_status') else "unread-badge"
+            badge_text = "Read" if book.get('read_status') else "Unread"
             book_html = f"""
             <div class='book-card'>
                 <div style='display: flex; justify-content: space-between; align-items: center;'>
                     <div>
-                        <strong>{book['title']}</strong><br>
-                        <em>by {book['author']}</em><br>
-                       <span>{book.get('publication_year', 'N/A')} • {book.get('genre', 'N/A')}</span>
+                        <strong>{book.get('title', 'Untitled')}</strong><br>
+                        <em>by {book.get('author', 'Unknown')}</em><br>
+                        <span>{book.get('publication_year', 'N/A')} • {book.get('genre', 'N/A')}</span>
                     </div>
                     <div>
                         <span class='{badge_class}'>{badge_text}</span>
@@ -273,7 +279,7 @@ elif st.session_state.current_view == "search_books":
         search_book(term, by)
         if st.session_state.search_results:
             for b in st.session_state.search_results:
-                st.markdown(f"**{b['title']}** by {b['author']} ({b['publication_year']}) - {b['genre']} | {'✅ Read' if b['read_status'] else '❌ Unread'}")
+                st.markdown(f"**{b.get('title')}** by {b.get('author')} ({b.get('publication_year', 'N/A')}) - {b.get('genre')} | {'✅ Read' if b.get('read_status') else '❌ Unread'}")
         else:
             st.warning("No results found.")
 
